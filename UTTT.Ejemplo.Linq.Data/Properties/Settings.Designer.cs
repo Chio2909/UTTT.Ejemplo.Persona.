@@ -29,9 +29,9 @@ namespace UTTT.Ejemplo.Linq.Data.Properties {
         [global::System.Configuration.DefaultSettingValueAttribute("workstation id=PersonaWeb.mssql.somee.com;packet size=4096;user id=mar1298_SQLLog" +
             "in_1;pwd=rixqnfjqbi;data source=PersonaWeb.mssql.somee.com;persist security info" +
             "=False;initial catalog=PersonaWeb")]
-        public string PersonaConnectionString {
+        public string PersonaWebConnectionString {
             get {
-                return ((string)(this["PersonaConnectionString"]));
+                return ((string)(this["PersonaWebConnectionString"]));
             }
         }
         

@@ -1,0 +1,93 @@
+﻿
+body {
+    color: #171616;
+    background: #7a7a7a;
+    font-family: 'Century Gothic', Century Gothic;
+}
+
+.form-control {
+    background: #91d5a8;
+    font-size: 16px;
+    border-color: transparent;
+    box-shadow: none !important;
+}
+
+    .form-control:focus {
+        border-color: #91d5a8;
+        background: #e9f5ee;
+    }
+
+.form-control, .btn {
+    border-radius: 2px;
+}
+
+margin: 0 auto;
+}
+
+.login-form h1 {
+    margin: 0;
+    padding: 30px 0;
+    font-size: 34px;
+    font: bold;
+}
+
+.login-form .avatar {
+    margin: 0 auto 30px;
+    width: 120px;
+    height: 120px;
+}
+
+    .login-form .avatar img {
+        width: 100%;
+    }
+
+.login-form form {
+    color: #7a7a7a;
+    border-radius: 4px;
+    margin-bottom: 40px;
+    background: #F3D0E5;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+}
+
+.login-form .btn {
+    font-size: 16px;
+    line-height: 26px;
+    min-width: 120px;
+    font-weight: bold;
+    background: #5F8DDF;
+    border: 10px;
+}
+
+    .login-form .btn:hover, .login-form .btn:focus {
+        background: #48D182;
+        outline: none !important;
+    }
+
+.checkbox-inline {
+    margin-top: 14px;
+}
+
+    .checkbox-inline input {
+        margin-top: 3px;
+    }
+
+.login-form a {
+    color: #1825EE;
+}
+
+    .login-form a:hover {
+        text-decoration: underline;
+    }
+
+.hint-text {
+    color: #2F2F3B;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.login-form {
+    background-color: #B67BD1;
+    width: 480px;
+    margin: 0 auto;
+}

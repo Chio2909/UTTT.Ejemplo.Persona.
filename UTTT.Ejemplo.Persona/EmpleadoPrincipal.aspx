@@ -29,6 +29,7 @@
                   <div class="container-fluid">     
           <div runat="server" class="navbar-form navbar-right">
           <div  style="font-family: 'Century Gothic'; font-weight: bold" align="right">     
+
            <asp:ImageButton ID="ImageButton2" ImageUrl="~/Images/menu.png"  AlternateText="No Image available" OnClick="btnMenu_Click" runat="server" Width="50px" Height="50px" />
             <asp:ImageButton ID="Image" ImageUrl="~/Images/ta.png"  AlternateText="No Image available" 
               runat="server" Width="50px" Height="50px"  />

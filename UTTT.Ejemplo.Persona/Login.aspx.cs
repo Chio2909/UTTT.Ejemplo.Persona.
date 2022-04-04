@@ -19,6 +19,9 @@ namespace UTTT.Ejemplo.Persona
         }
         protected void btnLogin_Click(object sender, EventArgs e)
         {
+            //txtPassword.Text = Seguridad.Encriptar(txtPassword.Text);
+            //txtPassword.Text = Seguridad.DesEncriptar(txtPassword.Text);
+            //txtPassword.Text = Seguridad.DesEncriptar(txtPassword.Text);
             using (SqlConnection sqlCon = new SqlConnection("Data Source=PersonaWeb.mssql.somee.com;" +
                 "Initial Catalog=PersonaWeb;Persist Security Info=True;User ID=mar1298_SQLLogin_1;Password=rixqnfjqbi"))
 
@@ -65,7 +68,7 @@ namespace UTTT.Ejemplo.Persona
         }
         protected void btnRecuperar_Click(object sender, EventArgs e)
         {
-            this.Response.Redirect("~/Recuperarcontrasenia.aspx");
+            this.Response.Redirect("~/RecuperarContraseña.aspx");
         }
 
 

@@ -46,53 +46,16 @@
       <Column Name="strRFC" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="idCatSexo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="idCatEstadoCivil" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Empleado_Direccion" Member="Direccion" ThisKey="id" OtherKey="idEmpleado" Type="Direccion" />
       <Association Name="Empleado_Usuario" Member="Usuario" ThisKey="id" OtherKey="idEmpleado" Type="Usuario" />
       <Association Name="CatEstadoCivil_Empleado" Member="CatEstadoCivil" ThisKey="idCatEstadoCivil" OtherKey="id" Type="CatEstadoCivil" IsForeignKey="true" />
       <Association Name="CatSexo_Empleado" Member="CatSexo" ThisKey="idCatSexo" OtherKey="id" Type="CatSexo" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Direccion" Member="Direccion">
-    <Type Name="Direccion">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="idPersona" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="strCalle" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="strNumero" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="strColonia" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="idEmpleado" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Persona_Direccion" Member="Persona" ThisKey="idPersona" OtherKey="id" Type="Persona" IsForeignKey="true" />
-      <Association Name="Empleado_Direccion" Member="Empleado" ThisKey="idEmpleado" OtherKey="id" Type="Empleado" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Catalogo" Member="Catalogo">
-    <Type Name="Catalogo">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Descripcion" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
-      <Column Name="Codigo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Marca" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="idCategoria" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="CatCategoria_Catalogo" Member="CatCategoria" ThisKey="idCategoria" OtherKey="id" Type="CatCategoria" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CatCategoria" Member="CatCategoria">
     <Type Name="CatCategoria">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="strValor" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Association Name="CatCategoria_Catalogo" Member="Catalogo" ThisKey="id" OtherKey="idCategoria" Type="Catalogo" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Usuario" Member="Usuario">
-    <Type Name="Usuario">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="idEmpleado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="strNombreUsuario" Type="System.String" DbType="NChar(15) NOT NULL" CanBeNull="false" />
-      <Column Name="strPassword" Type="System.String" DbType="NChar(16) NOT NULL" CanBeNull="false" />
-      <Column Name="idStatus" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="idPerfil" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Empleado_Usuario" Member="Empleado" ThisKey="idEmpleado" OtherKey="id" Type="Empleado" IsForeignKey="true" />
-      <Association Name="CatUsuario_Usuario" Member="CatUsuario" ThisKey="idStatus" OtherKey="id" Type="CatUsuario" IsForeignKey="true" />
-      <Association Name="CatPerfil_Usuario" Member="CatPerfil" ThisKey="idPerfil" OtherKey="id" Type="CatPerfil" IsForeignKey="true" />
+      <Association Name="CatCategoria_Catalogo" Member="Catalogo" ThisKey="id" OtherKey="idProveedor" Type="Catalogo" />
     </Type>
   </Table>
   <Table Name="dbo.CatUsuario" Member="CatUsuario">
@@ -107,6 +70,66 @@
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="strValor" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="CatPerfil_Usuario" Member="Usuario" ThisKey="id" OtherKey="idPerfil" Type="Usuario" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Direccion" Member="Direccion">
+    <Type Name="Direccion">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idPersona" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="strCalle" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="strNumero" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="strColonia" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idEmpleado" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idProveedor" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Persona_Direccion" Member="Persona" ThisKey="idPersona" OtherKey="id" Type="Persona" IsForeignKey="true" />
+      <Association Name="Proveedor_Direccion" Member="Proveedor" ThisKey="idProveedor" OtherKey="id" Type="Proveedor" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalogo" Member="Catalogo">
+    <Type Name="Catalogo">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="Codigo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Marca" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idCategoria" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idProveedor" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="CatCategoria_Catalogo" Member="CatCategoria" ThisKey="idProveedor" OtherKey="id" Type="CatCategoria" IsForeignKey="true" />
+      <Association Name="Proveedor_Catalogo" Member="Proveedor" ThisKey="idProveedor" OtherKey="id" Type="Proveedor" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CatTipo" Member="CatTipo">
+    <Type Name="CatTipo">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="strValor" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="CatTipo_Proveedor" Member="Proveedor" ThisKey="id" OtherKey="idTipo" Type="Proveedor" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Proveedor" Member="Proveedor">
+    <Type Name="Proveedor">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Clave" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="RFC" Type="System.String" DbType="NVarChar(14)" CanBeNull="true" />
+      <Column Name="Encargado" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="idTipo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Proveedor_Direccion" Member="Direccion" ThisKey="id" OtherKey="idProveedor" Type="Direccion" />
+      <Association Name="Proveedor_Catalogo" Member="Catalogo" ThisKey="id" OtherKey="idProveedor" Type="Catalogo" />
+      <Association Name="CatTipo_Proveedor" Member="CatTipo" ThisKey="idTipo" OtherKey="id" Type="CatTipo" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Usuario" Member="Usuario">
+    <Type Name="Usuario">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idEmpleado" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="strNombreUsuario" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="strPassword" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idStatus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idPerfil" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="token" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="CatPerfil_Usuario" Member="CatPerfil" ThisKey="idPerfil" OtherKey="id" Type="CatPerfil" IsForeignKey="true" />
+      <Association Name="Empleado_Usuario" Member="Empleado" ThisKey="idEmpleado" OtherKey="id" Type="Empleado" IsForeignKey="true" />
+      <Association Name="CatUsuario_Usuario" Member="CatUsuario" ThisKey="idStatus" OtherKey="id" Type="CatUsuario" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

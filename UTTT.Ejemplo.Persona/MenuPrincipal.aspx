@@ -50,7 +50,7 @@
            <br />
            <br />
           <div class="row" align="center">
-              <div class="col-sm-4">
+              <div class="col-sm-6">
                   <div class="card">
  <div class="card-body">
      <asp:Label  runat="server" Text="Catalogo" CssClass="control-label " for="accion"  Font-Size="Large" Font-Bold="True" ></asp:Label>
@@ -59,7 +59,7 @@
                   </div>
                   </div>
               </div>
-               <div class="col-sm-4">
+               <div class="col-sm-6">
                   <div class="card">
  <div class="card-body">
      <asp:Label  runat="server" Text="Empleado" CssClass="control-label " for="accion"  Font-Size="Large" Font-Bold="True" ></asp:Label>
@@ -69,13 +69,30 @@
                   </div>
                   </div>
               </div>
-              <div class="col-sm-4">
+            
+          </div>
+
+           <br />
+           <br />
+            <div class="row" align="center">
+            
+               <div class="col-sm-6">
+                  <div class="card">
+ <div class="card-body">
+     <asp:Label  runat="server" Text="Proveedor" CssClass="control-label " for="accion"  Font-Size="Large" Font-Bold="True" ></asp:Label>
+       
+     <p class="card-text">Agregar y visualizar proveedores dados de alta</p>
+      <asp:ImageButton ID="ImageButton6" ImageUrl="~/Images/person.PNG"  AlternateText="No Image available" OnClick="btnProveedor_Click" runat="server" Width="70px" Height="70px" />
+                  </div>
+                  </div>
+              </div>
+              <div class="col-sm-6">
                   <div class="card">
  <div class="card-body">
      <asp:Label  runat="server" Text="Usuario" CssClass="control-label " for="accion"  Font-Size="Large" Font-Bold="True" ></asp:Label>
        
      <p class="card-text">Agregar usuarios relacionados a los empleados o administradores</p>
-       <asp:ImageButton ID="ImageButton3" ImageUrl="~/Images/user.PNG"  AlternateText="No Image available" OnClick="btnUser_Click" runat="server" Width="60px" Height="60px" />
+       <asp:ImageButton ID="ImageButton7" ImageUrl="~/Images/user.PNG"  AlternateText="No Image available" OnClick="btnUser_Click" runat="server" Width="60px" Height="60px" />
                   </div>
                   </div>
               </div>

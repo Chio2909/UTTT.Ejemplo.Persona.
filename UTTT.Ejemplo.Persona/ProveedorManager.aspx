@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CatalogoManager.aspx.cs" Inherits="UTTT.Ejemplo.Persona.CatalogoManager" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ProveedorManager.aspx.cs" Inherits="UTTT.Ejemplo.Persona.ProveedorManager" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -66,7 +66,7 @@
          }
      </style>
 
-     <title>Catalogo Manager</title>
+     <title>Proveedor Manager</title>
     <link href="StyleSheet1.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"/>
 </head>
@@ -77,8 +77,7 @@
        <div class="container" style="font-family: 'Century Gothic'; Font-Bold="True"" >       
        <div id="form1" class="well"> 
            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-          
-        <legend><center><h2><b>Catalogo</b></h2></center></legend>          
+        <legend><center><h2><b>Proveedor</b></h2></center></legend>          
        <div  style="font-family: 'Century Gothic'; " align="center">
        <asp:Label ID="lblAccion" runat="server" Text="Accion" CssClass="control-label " for="accion"  Font-Size="Large" Font-Bold="True"></asp:Label>
        </div>
@@ -88,34 +87,33 @@
 
      <fieldset>
 
-
-         <%--Categoria--%>
+         <%--Tipo--%>
           <div class="form-group"  style="font-family: 'Century Gothic'; "   >
-        <asp:Label runat="server" Text="Categoria:" Class="control-label col-sm-4" for="categoria" Font-Bold="True"></asp:Label>
+        <asp:Label runat="server" Text="Tipo:" Class="control-label col-sm-4" for="sexo" Font-Bold="True"></asp:Label>
         <div class="col-md-4 inputGroupContainer">
          <div class="input-group">
          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-        <asp:DropDownList ID="ddlCategoria" runat="server" Class="form-control border border-secondary" onselectedindexchanged="ddlSexo_SelectedIndexChanged"   >
+        <asp:DropDownList ID="ddlTipo" runat="server" Class="form-control border border-secondary" onselectedindexchanged="ddlTipo_SelectedIndexChanged"   >
         </asp:DropDownList>
           
              </div>
             
-             <asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="ddlCategoria" ErrorMessage="Selecciona la categoria" MaximumValue="6" MinimumValue="0" Type="Integer" EnableClientScript="False"></asp:RangeValidator>
+             <asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="ddlTipo" ErrorMessage="Selecciona nacional o internacional" MaximumValue="3" MinimumValue="0" Type="Integer" EnableClientScript="False"></asp:RangeValidator>
 
 </div>
               </div>
 
-         <%--Codigo--%>
+         <%--Clave --%>
           <div class="form-group"  style ="font-family: 'Century Gothic'; ">
-        <asp:Label runat="server" Text="Codigo:" CssClass="control-label col-sm-4 " for="txtCodigo" Font-Bold="True"></asp:Label> 
+        <asp:Label runat="server" Text="Clave:" CssClass="control-label col-sm-4 " for="txtClave" Font-Bold="True"></asp:Label> 
             <div class="col-md-4 inputGroupContainer">
          <div class="input-group">
              <span class="input-group-addon"><i class="glyphicon glyphicon-certificate"></i></span>
-        <asp:TextBox Class="form-control border border-secondary "  ID="txtCodigo" 
-            onkeypress="return validaNumeros(event);" pattern=".{1,5}" title="1 a 5 es la longitud maxima que se permite ingresar" runat="server" 
-            ViewStateMode="Disabled" minlength="5" MaxLength="5"   ></asp:TextBox>
+        <asp:TextBox Class="form-control border border-secondary "  ID="txtClave" 
+            onkeypress="return validaNumeros(event);" pattern=".{1,4}" title="1 a 4 es la longitud maxima que se permite ingresar" runat="server" 
+            ViewStateMode="Disabled" minlength="4" MaxLength="4"   ></asp:TextBox>
              </div>
-      <asp:RequiredFieldValidator ID="rfvCodigo" runat="server" ControlToValidate="txtCodigo" ErrorMessage="Codigo es obligatorio" EnableClientScript="False"></asp:RequiredFieldValidator>
+      <asp:RequiredFieldValidator ID="rfvClave" runat="server" ControlToValidate="txtClave" ErrorMessage="Clave es obligatorio" EnableClientScript="False"></asp:RequiredFieldValidator>
         
                 </div>
            </div>
@@ -133,50 +131,34 @@
 </div>
          </div>
 
-         <%--Descripcion--%>
+           <%--RFC--%>
+
+         <div class="form-group"  style="font-family: 'Century Gothic'; " align="left">
+             <asp:Label runat="server" Text="RFC:" CssClass="control-label col-sm-4" for="rfc" Font-Bold="True"></asp:Label>       
+                    <div class="col-md-4 inputGroupContainer">
+         <div class="input-group">
+             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+             <asp:TextBox CssClass="form-control border border-secondary " ID="txtRFC" runat="server"  ></asp:TextBox>
+             </div>
+             <asp:RequiredFieldValidator ID="rfvRFC"  runat="server" ControlToValidate="txtRFC" EnableClientScript="False" ErrorMessage="RFC  Obligatorio*"></asp:RequiredFieldValidator>
+             <asp:RegularExpressionValidator ID="revRFCi" runat="server" ControlToValidate="txtRFC" ErrorMessage="RFC inválido!" ValidationExpression="(([A-Z]|\s){1})(([A-Z]){3})([0-9]{6})((([A-Z]|[0-9]){3}))" EnableClientScript="False"></asp:RegularExpressionValidator>
+             </div>
+                 </div>
+
+         <%--Encargado--%>
            <div class="form-group"  style="font-family: 'Century Gothic'; " >
-          <asp:Label runat="server" Text="Descripcion:" CssClass="control-label col-sm-4" for="Descripcion" Font-Bold="True"></asp:Label>
+          <asp:Label runat="server" Text="Nombre del encargado:" CssClass="control-label col-sm-4" for="Encargado" Font-Bold="True"></asp:Label>
                 <div class="col-md-4 inputGroupContainer">
          <div class="input-group">
              <span class="input-group-addon"><i class="glyphicon glyphicon-font"></i></span>
-          <asp:TextBox Class="form-control border border-secondary " ID="txtDescripcion" minlength="10" MaxLength="200"
+          <asp:TextBox Class="form-control border border-secondary " ID="txtEncargado" minlength="3" MaxLength="50"
               onkeypress="return validaLetras(event);" runat="server" ViewStateMode="Disabled" ></asp:TextBox>
              </div>
-         <asp:RequiredFieldValidator ID="rfvDesc" runat="server" ErrorMessage="Descripcion es obligatorio" ControlToValidate="txtDescripcion" ForeColor="Red" EnableClientScript="False"></asp:RequiredFieldValidator>
+         <asp:RequiredFieldValidator ID="rfvEncargado" runat="server" ErrorMessage="Encargado es obligatorio" ControlToValidate="txtEncargado" ForeColor="Red" EnableClientScript="False"></asp:RequiredFieldValidator>
 
                 </div>
         </div>
 
-         <%--Marca--%>
-          <div class="form-group" style="font-family: 'Century Gothic'; " align="left">
-           <asp:Label runat="server" Text="Marca:" CssClass="control-label col-sm-4" for="Marca" Font-Bold="True"></asp:Label>
-                <div class="col-md-4 inputGroupContainer">
-         <div class="input-group">
-             <span class="input-group-addon"><i class="glyphicon glyphicon-font"></i></span>
-           <asp:TextBox Class="form-control border border-secondary " ID="txtMarca" minlength="3" MaxLength="20"
-               onkeypress="return validaLetras(event);" runat="server" ViewStateMode="Disabled"  ></asp:TextBox>
-             </div>
-           <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Marca es obligatorio" 
-               ControlToValidate="txtMarca" ForeColor="Red" EnableClientScript="False"></asp:RequiredFieldValidator>
-        </div>
-        </div> 
-
-            <%--Proveedor--%>
-          <div class="form-group"  style="font-family: 'Century Gothic'; "   >
-        <asp:Label runat="server" Text="Proveedor:" Class="control-label col-sm-4" for="proveedor" Font-Bold="True"></asp:Label>
-        <div class="col-md-4 inputGroupContainer">
-         <div class="input-group">
-         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-        <asp:DropDownList ID="ddlProv" runat="server" Class="form-control border border-secondary" onselectedindexchanged="ddlProv_SelectedIndexChanged"   >
-        </asp:DropDownList>
-          
-             </div>
-            
-             <asp:RangeValidator ID="RangeValidator2" runat="server" ControlToValidate="ddlProv" ErrorMessage="Selecciona el proveedor" MaximumValue="6" MinimumValue="0" Type="Integer" EnableClientScript="False"></asp:RangeValidator>
-
-</div>
-              </div
-    
           
 
         <%-- Label--%>

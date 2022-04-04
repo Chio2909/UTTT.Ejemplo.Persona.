@@ -1,28 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Net;
-using System.Net.Mail;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using UTTT.Ejemplo.Linq.Data.Entity;
+using UTTT.Ejemplo.Linq.Data;
+using System.Data.Linq;
+using System.Linq.Expressions;
+using System.Collections;
 using UTTT.Ejemplo.Persona.Control;
 using UTTT.Ejemplo.Persona.Control.Ctrl;
+using UTTT.Ejemplo.Linq.Data.Entity;
+using System.Net.Mail;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
+using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace UTTT.Ejemplo.Persona
 {
-    public partial class CatalogoManager : System.Web.UI.Page
+    public partial class ProveedorManager : System.Web.UI.Page
     {
         #region Variables
 
         private SessionManager session = new SessionManager();
         private int idPersona = 0;
-        private UTTT.Ejemplo.Linq.Data.Entity.Catalogo baseEntity;
+        private UTTT.Ejemplo.Linq.Data.Entity.Proveedor baseEntity;
         private DataContext dcGlobal = new DcGeneralDataContext();
         private int tipoAccion = 0;
 
@@ -40,12 +44,12 @@ namespace UTTT.Ejemplo.Persona
                     int.Parse(this.session.Parametros["idPersona"].ToString()) : 0;
                 if (this.idPersona == 0)
                 {
-                    this.baseEntity = new Linq.Data.Entity.Catalogo();
+                    this.baseEntity = new Linq.Data.Entity.Proveedor();
                     this.tipoAccion = 1;
                 }
                 else
                 {
-                    this.baseEntity = dcGlobal.GetTable<Linq.Data.Entity.Catalogo>().First(c => c.id == this.idPersona);
+                    this.baseEntity = dcGlobal.GetTable<Linq.Data.Entity.Proveedor>().First(c => c.id == this.idPersona);
                     this.tipoAccion = 2;
                 }
 
@@ -55,33 +59,20 @@ namespace UTTT.Ejemplo.Persona
                     {
                         this.session.Parametros.Add("baseEntity", this.baseEntity);
                     }
-                    List<CatCategoria> lista = dcGlobal.GetTable<CatCategoria>().ToList();
-                    this.ddlCategoria.DataTextField = "strValor";
-                    this.ddlCategoria.DataValueField = "id";
-
-                    List<Proveedor> listaa = dcGlobal.GetTable<Proveedor>().ToList();
-                    this.ddlProv.DataTextField = "Nombre";
-                    this.ddlProv.DataValueField = "id";
+                    List<CatTipo> lista = dcGlobal.GetTable<CatTipo>().ToList();
+                    this.ddlTipo.DataTextField = "strValor";
+                    this.ddlTipo.DataValueField = "id";
 
                     if (this.idPersona == 0)
                     {
 
-                        CatCategoria catTemp = new CatCategoria();
+                        CatTipo catTemp = new CatTipo();
                         catTemp.id = -1;
                         catTemp.strValor = "Seleccionar";
                         lista.Insert(0, catTemp);
-                        this.ddlCategoria.DataSource = lista;
-                        this.ddlCategoria.DataBind();
-
-                        Proveedor catTemp1 = new Proveedor();
-                        catTemp1.id = -1;
-                        catTemp1.Nombre = "Seleccionar";
-                        listaa.Insert(0, catTemp1);
-                        this.ddlProv.DataSource = listaa;
-                        this.ddlProv.DataBind();
-
+                        this.ddlTipo.DataSource = lista;
+                        this.ddlTipo.DataBind();
                         this.lblAccion.Text = "Agregar";
-
 
 
                     }
@@ -89,31 +80,24 @@ namespace UTTT.Ejemplo.Persona
                     {
                         this.lblAccion.Text = "Editar";
                         this.txtNombre.Text = this.baseEntity.Nombre;
-                        this.txtCodigo.Text = this.baseEntity.Codigo;
-                        this.txtDescripcion.Text = this.baseEntity.Descripcion;
-                        this.txtMarca.Text = this.baseEntity.Marca;
-                     
-                        this.ddlCategoria.DataSource = lista;
-                        this.ddlCategoria.DataBind();
-                        this.setItem(ref this.ddlCategoria, baseEntity.CatCategoria.strValor);
+                        this.txtRFC.Text = this.baseEntity.RFC;
+                        this.txtEncargado.Text = this.baseEntity.Encargado;
+                        this.txtClave.Text = this.baseEntity.Clave;
 
-                        this.ddlProv.DataSource = listaa;
-                        this.ddlProv.DataBind();
-                        this.setItem(ref this.ddlProv, baseEntity.Proveedor.Nombre);
+                        this.ddlTipo.DataSource = lista;
+                        this.ddlTipo.DataBind();
+                        this.setItem(ref this.ddlTipo, baseEntity.CatTipo.strValor);
 
                     }
-                    this.ddlCategoria.SelectedIndexChanged += new EventHandler(ddlSexo_SelectedIndexChanged);
-                    this.ddlCategoria.AutoPostBack = true;
-
-                    this.ddlProv.SelectedIndexChanged += new EventHandler(ddlProv_SelectedIndexChanged);
-                    this.ddlProv.AutoPostBack = false;
+                    this.ddlTipo.SelectedIndexChanged += new EventHandler(ddlTipo_SelectedIndexChanged);
+                    this.ddlTipo.AutoPostBack = true;
                 }
 
             }
             catch (Exception _e)
             {
                 this.showMessage("Ha ocurrido un problema al cargar la página");
-                this.Response.Redirect("~/CatalogoPrincipal.aspx", false);
+                this.Response.Redirect("~/ProveedorPrincipal.aspx", false);
             }
 
         }
@@ -122,24 +106,34 @@ namespace UTTT.Ejemplo.Persona
         {
             try
             {
+                if (
+                     txtClave.Text == "" &&
+                    txtNombre.Text == "" &&
+                    txtEncargado.Text == "" &&
+                   
+                    ddlTipo.Text == "-1" &&
+                    
+                    txtRFC.Text == "")
+                {
+                    this.Response.Redirect("~/ProveedorPrincipal.aspx", false);
+                }
+
                 Page.Validate();
                 if (!Page.IsValid)
                 {
                     return;
                 }
-                
+               
                 DataContext dcGuardar = new DcGeneralDataContext();
-                UTTT.Ejemplo.Linq.Data.Entity.Catalogo persona = new Linq.Data.Entity.Catalogo();
+                UTTT.Ejemplo.Linq.Data.Entity.Proveedor persona = new Linq.Data.Entity.Proveedor();
                 if (this.idPersona == 0)
                 {
-                    persona.Codigo = this.txtCodigo.Text.Trim();
-                  
+                    persona.Clave = this.txtClave.Text.Trim();
+                    persona.RFC = this.txtRFC.Text.Trim();
                     persona.Nombre = this.txtNombre.Text.Trim();
-                    persona.Descripcion = this.txtDescripcion.Text.Trim();
-                    persona.Marca = this.txtMarca.Text.Trim();
-                    persona.idCategoria = int.Parse(this.ddlCategoria.Text);
-                    persona.idProveedor = int.Parse(this.ddlProv.Text);
-                   
+                    persona.Encargado = this.txtEncargado.Text.Trim();
+                    persona.idTipo = int.Parse(this.ddlTipo.Text);
+
                     String mensaje = String.Empty;
 
                     if (!this.validacion(persona, ref mensaje))
@@ -161,27 +155,23 @@ namespace UTTT.Ejemplo.Persona
                         return;
                     }
 
-
-                    dcGuardar.GetTable<UTTT.Ejemplo.Linq.Data.Entity.Catalogo>().InsertOnSubmit(persona);
+                    dcGuardar.GetTable<UTTT.Ejemplo.Linq.Data.Entity.Proveedor>().InsertOnSubmit(persona);
                     dcGuardar.SubmitChanges();
                     this.showMessage("El registro se agrego correctamente.");
 
-                    this.Response.Redirect("~/CatalogoPrincipal.aspx", false);
+                    this.Response.Redirect("~/ProveedorPrincipal.aspx", false);
 
 
 
                 }
                 if (this.idPersona > 0)
                 {
-                    persona = dcGuardar.GetTable<UTTT.Ejemplo.Linq.Data.Entity.Catalogo>().First(c => c.id == idPersona);
-                    persona.Codigo = this.txtCodigo.Text.Trim();
+                    persona = dcGuardar.GetTable<UTTT.Ejemplo.Linq.Data.Entity.Proveedor>().First(c => c.id == idPersona);
+                    persona.Clave = this.txtClave.Text.Trim();
                     persona.Nombre = this.txtNombre.Text.Trim();
-                    persona.Descripcion = this.txtDescripcion.Text.Trim();
-                    persona.Marca = this.txtMarca.Text.Trim();
-                    persona.idProveedor = int.Parse(this.ddlProv.Text);
-
-                    persona.idCategoria = int.Parse(this.ddlCategoria.Text);
-                   
+                    persona.RFC = this.txtRFC.Text.Trim();
+                    persona.Encargado = this.txtEncargado.Text.Trim();
+                    persona.idTipo = int.Parse(this.ddlTipo.Text);
                     String mensaje = String.Empty;
 
                     if (!this.validacion(persona, ref mensaje))
@@ -205,7 +195,7 @@ namespace UTTT.Ejemplo.Persona
 
                     dcGuardar.SubmitChanges();
                     this.showMessage("El registro se edito correctamente.");
-                    this.Response.Redirect("~/CatalogoPrincipal.aspx", false);
+                    this.Response.Redirect("~/ProveedorPrincipal.aspx", false);
 
                 }
             }
@@ -235,7 +225,7 @@ namespace UTTT.Ejemplo.Persona
         {
             try
             {
-                this.Response.Redirect("~/CatalogoPrincipal.aspx", false);
+                this.Response.Redirect("~/ProveedorPrincipal.aspx", false);
             }
             catch (Exception _e)
             {
@@ -243,39 +233,19 @@ namespace UTTT.Ejemplo.Persona
             }
         }
 
-        protected void ddlSexo_SelectedIndexChanged(object sender, EventArgs e)
+        protected void ddlTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                int idSexo = int.Parse(this.ddlCategoria.Text);
-                Expression<Func<CatCategoria, bool>> predicateSexo = c => c.id == idSexo;
+                int idSexo = int.Parse(this.ddlTipo.Text);
+                Expression<Func<CatTipo, bool>> predicateSexo = c => c.id == idSexo;
                 predicateSexo.Compile();
-                List<CatCategoria> lista = dcGlobal.GetTable<CatCategoria>().Where(predicateSexo).ToList();
-                CatCategoria catTemp = new CatCategoria();
-                this.ddlCategoria.DataTextField = "strValor";
-                this.ddlCategoria.DataValueField = "id";
-                this.ddlCategoria.DataSource = lista;
-                this.ddlCategoria.DataBind();
-            }
-            catch (Exception)
-            {
-                this.showMessage("Ha ocurrido un error inesperado");
-            }
-        }
-
-        protected void ddlProv_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                int idSexo = int.Parse(this.ddlProv.Text);
-                Expression<Func<Proveedor, bool>> predicateSexo = c => c.id == idSexo;
-                predicateSexo.Compile();
-                List<Proveedor> listaa = dcGlobal.GetTable<Proveedor>().Where(predicateSexo).ToList();
-                Proveedor catTemp1 = new Proveedor();
-                this.ddlProv.DataTextField = "Nombre";
-                this.ddlProv.DataValueField = "id";
-                this.ddlProv.DataSource = listaa;
-                this.ddlProv.DataBind();
+                List<CatTipo> lista = dcGlobal.GetTable<CatTipo>().Where(predicateSexo).ToList();
+                CatTipo catTemp = new CatTipo();
+                this.ddlTipo.DataTextField = "strValor";
+                this.ddlTipo.DataValueField = "id";
+                this.ddlTipo.DataSource = lista;
+                this.ddlTipo.DataBind();
             }
             catch (Exception)
             {
@@ -307,27 +277,26 @@ namespace UTTT.Ejemplo.Persona
 
         }
 
-        public bool validacion(Linq.Data.Entity.Catalogo _persona, ref string _mensaje)
+        public bool validacion(Linq.Data.Entity.Proveedor _persona, ref string _mensaje)
         {
-            if (_persona.idCategoria == -1)
+            if (_persona.idTipo == -1)
             {
-                _mensaje = "Selecciona la categoria";
-                return false;
-            }
-            if (_persona.idProveedor == -1)
-            {
-                _mensaje = "Selecciona el proveedor";
+                _mensaje = "Selecciona la nacioanlidad";
                 return false;
             }
 
             int i = 0;
-            if (int.TryParse(_persona.Codigo, out i) == false)
+            if (int.TryParse(_persona.Clave, out i) == false)
             {
-                _mensaje = "El codigo no es un numero";
+                _mensaje = "La clave unica no es un numero";
                 return false;
             }
 
-          
+            if (int.Parse(_persona.Clave) < 100 && int.Parse(_persona.Clave) > 999)
+            {
+                _mensaje = "La clave unica esta fuera de rango";
+                return false;
+            }
 
             if (_persona.Nombre.Equals(String.Empty))
             {
@@ -335,69 +304,88 @@ namespace UTTT.Ejemplo.Persona
                 return false;
             }
 
+            if (_persona.Nombre.Length > 50)
+            {
+                _mensaje = "El nombre sale del rango establecido de caracteres";
+                return false;
+            }
+
+            if (_persona.RFC.Equals(String.Empty))
+            {
+                _mensaje = "El RFC esta vacio";
+                return false;
+            }
+
+            if (_persona.RFC.Length > 13)
+            {
+                _mensaje = "El RFC sale del rango establecido de caracteres";
+                return false;
+            }
 
             return true;
         }
-
         public bool validacionHTML(ref String _mensaje)
         {
             CtrlValidaInyeccion valida = new CtrlValidaInyeccion();
             string mensajefuncion = string.Empty;
-            if (valida.htmlInyectionValida(this.txtNombre.Text.Trim(), ref mensajefuncion, "Nombre de producto", ref this.txtNombre))
+            if (valida.htmlInyectionValida(this.txtClave.Text.Trim(), ref mensajefuncion, "Clave Unica", ref this.txtClave))
+            {
+                _mensaje = mensajefuncion;
+                return false;
+            }
+            if (valida.htmlInyectionValida(this.txtNombre.Text.Trim(), ref mensajefuncion, "Nombre", ref this.txtNombre))
             {
                 _mensaje = mensajefuncion;
                 return false;
             }
 
+           
 
-            if (valida.htmlInyectionValida(this.txtDescripcion.Text.Trim(), ref mensajefuncion, "Descripcion", ref this.txtDescripcion))
+            if (valida.htmlInyectionValida(this.txtEncargado.Text.Trim(), ref mensajefuncion, "Encargado", ref this.txtEncargado))
             {
                 _mensaje = mensajefuncion;
                 return false;
             }
-
-            if (valida.htmlInyectionValida(this.txtCodigo.Text.Trim(), ref mensajefuncion, "Codigo", ref this.txtCodigo))
+           
+            if (valida.htmlInyectionValida(this.txtRFC.Text.Trim(), ref mensajefuncion, "RFC", ref this.txtRFC))
             {
                 _mensaje = mensajefuncion;
                 return false;
             }
-            if (valida.htmlInyectionValida(this.txtMarca.Text.Trim(), ref mensajefuncion, "Marca", ref this.txtMarca))
-            {
-                _mensaje = mensajefuncion;
-                return false;
-            }
-
             return true;
         }
+
         public bool validacionSQL(ref String _mensaje)
         {
             CtrlValidaInyeccion valida = new CtrlValidaInyeccion();
             string mensajefuncion = string.Empty;
-            if (valida.sqlInyectionValida(this.txtNombre.Text.Trim(), ref mensajefuncion, "Nombre de producto", ref this.txtNombre))
+            if (valida.sqlInyectionValida(this.txtClave.Text.Trim(), ref mensajefuncion, "Clave Unica", ref this.txtClave))
             {
                 _mensaje = mensajefuncion;
                 return false;
             }
 
-
-            if (valida.sqlInyectionValida(this.txtDescripcion.Text.Trim(), ref mensajefuncion, "Descripcion", ref this.txtDescripcion))
+            if (valida.sqlInyectionValida(this.txtNombre.Text.Trim(), ref mensajefuncion, "Nombre", ref this.txtNombre))
+            {
+                _mensaje = mensajefuncion;
+                return false;
+            }
+           
+            if (valida.sqlInyectionValida(this.txtEncargado.Text.Trim(), ref mensajefuncion, "Encargado", ref this.txtEncargado))
             {
                 _mensaje = mensajefuncion;
                 return false;
             }
 
-            if (valida.sqlInyectionValida(this.txtCodigo.Text.Trim(), ref mensajefuncion, "Codigo", ref this.txtCodigo))
+            if (valida.sqlInyectionValida(this.txtRFC.Text.Trim(), ref mensajefuncion, "RFC", ref this.txtRFC))
             {
                 _mensaje = mensajefuncion;
                 return false;
             }
-            if (valida.sqlInyectionValida(this.txtMarca.Text.Trim(), ref mensajefuncion, "Marca", ref this.txtMarca))
-            {
-                _mensaje = mensajefuncion;
-                return false;
-            }
+
             return true;
         }
+
         #endregion
 
     }

@@ -220,9 +220,5 @@ namespace UTTT.Ejemplo.Persona
             this.DataSourcePersona.RaiseViewChanged();
         }
 
-        protected void ddlSexo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
-}
+    }

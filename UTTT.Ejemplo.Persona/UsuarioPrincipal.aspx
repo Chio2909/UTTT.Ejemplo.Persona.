@@ -109,7 +109,7 @@
                 <AlternatingRowStyle BackColor="#BBA9BB" />
                 <Columns>
                     <asp:BoundField DataField="strNombreUsuario" HeaderText="Nombre de Usuario" ReadOnly="True" SortExpression="strNombreUsuario" />
-                    <asp:BoundField DataField="strPassword" HeaderText="Contraseña" ReadOnly="True" SortExpression="strPassword" />
+                   <%-- <asp:BoundField DataField="strPassword" HeaderText="Contraseña" ReadOnly="True" SortExpression="strPassword" />--%>
                 <asp:BoundField DataField="CatUsuario" HeaderText="Satus" ReadOnly="True" SortExpression="CatUsuario" /> 
                     <asp:BoundField DataField="CatPerfil" HeaderText="Perfil" ReadOnly="True" SortExpression="CatPerfil" />  
                     <asp:BoundField DataField="Empleado" HeaderText="Empleado" SortExpression="Empleado" />
@@ -159,7 +159,7 @@
         <asp:LinqDataSource ID="DataSourcePersona" runat="server" 
         ContextTypeName="UTTT.Ejemplo.Linq.Data.Entity.DcGeneralDataContext" 
         onselecting="DataSourcePersona_Selecting" 
-        Select="new (strNombreUsuario,strPassword,CatUsuario, CatPerfil, Empleado ,id)" 
+        Select="new (strNombreUsuario,CatUsuario, CatPerfil, Empleado ,id)" 
         TableName="Persona" EntityTypeName="">
         </asp:LinqDataSource>
    

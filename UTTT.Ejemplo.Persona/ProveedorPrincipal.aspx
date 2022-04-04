@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CatalogoPrincipal.aspx.cs" Inherits="UTTT.Ejemplo.Persona.CatalogoPrincipal" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ProveedorPrincipal.aspx.cs" Inherits="UTTT.Ejemplo.Persona.ProveedorPrincipal" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Catalogo Principal</title>
+    <title>Proveedor Principal</title>
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"/>
     <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -21,36 +21,30 @@
    
 </head>
 <body>     
-          <form id="form2" class="well form-horizontal" runat="server">
-             
-      <div class="container" style="font-family: 'Century Gothic'; ">
+           <form id="form2" class="well form-horizontal" runat="server">
+               
+              <div class="container" style="font-family: 'Century Gothic'; ">
           <div id="form1" class="well">
-
-               <div class="container-fluid">     
+            
+                  <div class="container-fluid">     
           <div runat="server" class="navbar-form navbar-right">
-          <div  style="font-family: 'Century Gothic'; font-weight: bold" align="right">  
-              <asp:ImageButton ID="ImageButton2" ImageUrl="~/Images/menu.png"  AlternateText="No Image available" OnClick="btnMenu_Click" runat="server" Width="50px" Height="50px" />
-              
-               <asp:ImageButton ID="Image" ImageUrl="~/Images/ta.png"  AlternateText="No Image available" 
-              runat="server" Width="50px" Height="50px"  />
+          <div  style="font-family: 'Century Gothic'; font-weight: bold" align="right">     
 
-            <asp:ImageButton ID="ImageButton4" ImageUrl="~/Images/log.png"  AlternateText="No Image available" 
+           <asp:ImageButton ID="ImageButton2" ImageUrl="~/Images/menu.png"  AlternateText="No Image available" OnClick="btnMenu_Click" runat="server" Width="50px" Height="50px" />
+            <asp:ImageButton ID="Image" ImageUrl="~/Images/ta.png"  AlternateText="No Image available" 
+              runat="server" Width="50px" Height="50px"  />
+              <asp:ImageButton ID="ImageButton4" ImageUrl="~/Images/log.png"  AlternateText="No Image available" 
               OnClick="btnLogout_Click" runat="server" Width="50px" Height="50px"  />
          <%-- <asp:Button ID="btnLogout" runat="server" class="btn btn-danger" Text="Cerrar Sesión"   OnClick="btnLogout_Click"  />--%>
           </div>
           </div>
 
-          </div>
-                   <legend><center><h2><b>Catalogo Principal </b></h2></center></legend><br>
-               <fieldset>
-               <asp:Label ID="lblUserDetails" runat="server" Text=""></asp:Label>
+          </div> 
+                   <legend><center><h2><b>Proveedor Principal </b></h2></center></legend><br>
+              <fieldset>
+                  <asp:Label ID="lblUserDetails" runat="server" Text=""></asp:Label>
          <asp:ScriptManager runat="server" />
-                     </div>
-
-        
-
-
-                       <div id="form1" class="well">
+             <br />
 
                           <%-- Nombre--%>
          <div class="form-group" style="font-family: 'Century Gothic'; " align="left">
@@ -62,13 +56,12 @@
          </div>
 
       
-                         <%--  categoria--%>
+                         <%--Tipo--%>
 
        <div class="form-group" style="font-family: 'Century Gothic'; " align="left">
-       <asp:Label runat="server" Text="Categoria:" CssClass="control-label col-sm-2" for="sexo" Font-Bold="True"></asp:Label>   
-       <asp:DropDownList ID="ddlCategoria" CssClass="form-control form-select border border-secondary " runat="server" Width="209px" >  </asp:DropDownList> 
+       <asp:Label runat="server" Text="Tipo:" CssClass="control-label col-sm-2" for="sexo" Font-Bold="True"></asp:Label>   
+       <asp:DropDownList ID="ddlTipo" CssClass="form-control form-select border border-secondary " runat="server" Width="209px" >  </asp:DropDownList> 
 </div>
-
                 <%-- Botones--%>
 
                            <div runat="server" class="navbar-form navbar-left">
@@ -110,13 +103,11 @@
                 ViewStateMode="Disabled">
                 <AlternatingRowStyle BackColor="#BBA9BB" />
                 <Columns>
-                    <asp:BoundField DataField="Codigo" HeaderText="Codigo " ReadOnly="True" SortExpression="Codigo" />
+                    <asp:BoundField DataField="Clave" HeaderText="Clave " ReadOnly="True" SortExpression="Clave" />
+                    <asp:BoundField DataField="RFC" HeaderText="RFC" ReadOnly="True" SortExpression="RFC" />
                     <asp:BoundField DataField="Nombre" HeaderText="Nombre" ReadOnly="True" SortExpression="Nombre" />
-                <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" ReadOnly="True" SortExpression="Descripcion" /> 
-                    <asp:BoundField DataField="Marca" HeaderText="Marca" ReadOnly="True" SortExpression="Marca" />  
-                    <asp:BoundField DataField="Proveedor" HeaderText="Proveedor" ReadOnly="True" SortExpression="Proveedor" />  
-                    <asp:BoundField DataField="CatCategoria" HeaderText="Categoria" SortExpression="CatCategoria" />
-
+                    <asp:BoundField DataField="Encargado" HeaderText="Encargado" ReadOnly="True" SortExpression="Encargado" />   
+                    <asp:BoundField DataField="CatTipo" HeaderText="Tipo" SortExpression="CatTipo" />
                   <asp:TemplateField HeaderText="Editar">
                         <ItemTemplate>
                                     <asp:ImageButton runat="server" ID="imgEditar" CommandName="Editar" CommandArgument='<%#Bind("id") %>' ImageUrl="~/Images/editrecord_16x16.png" />
@@ -134,13 +125,13 @@
                     <ItemStyle HorizontalAlign="Center" Width="50px" />
                     </asp:TemplateField>
 
-                      <%--<asp:TemplateField HeaderText="Persona">
+                      <asp:TemplateField HeaderText="Direccion">
                       <ItemTemplate>
                       <asp:ImageButton runat="server" ID="imgDireccion" CommandName="Direccion" CommandArgument='<%#Bind("id") %>' ImageUrl="~/Images/editrecord_16x16.png" />
                       </ItemTemplate>
                       <HeaderStyle HorizontalAlign="Center" />
                       <ItemStyle HorizontalAlign="Center" Width="50px" />         
-                     </asp:TemplateField>--%>
+                     </asp:TemplateField>
                 </Columns>
 
                 <FooterStyle BackColor="Gray" ForeColor="Gray" />
@@ -162,7 +153,7 @@
         <asp:LinqDataSource ID="DataSourcePersona" runat="server" 
         ContextTypeName="UTTT.Ejemplo.Linq.Data.Entity.DcGeneralDataContext" 
         onselecting="DataSourcePersona_Selecting" 
-        Select="new (Nombre,Descripcion,Codigo, Marca, CatCategoria, Proveedor ,id)" 
+        Select="new (Nombre,RFC, Encargado, CatTipo, Clave,id)" 
         TableName="Persona" EntityTypeName="">
         </asp:LinqDataSource>
    
@@ -178,8 +169,11 @@
              });
 
          </script>--%>
-                            </fieldset>
+
+                    </fieldset>
     </div>
               </div>
     </form>
     </body>
+    </html>
+

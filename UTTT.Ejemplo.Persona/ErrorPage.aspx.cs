@@ -19,7 +19,7 @@ namespace UTTT.Ejemplo.Persona
         {
             try
             {
-                this.Response.Redirect("~/PersonaPrincipal.aspx", false);
+                this.Response.Redirect("~/MenuPrincipal.aspx", false);
             }
             catch (Exception _e)
             {

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -32,12 +34,6 @@ namespace UTTT.Ejemplo.Persona
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["strNombreUsuario"] == null)
-            {
-                Response.Redirect("Login.aspx");
-
-                lblUserDetails.Text = "strNombreUsuario : " + Session["strNombreUsuario"];
-            }
             try
             {
                 this.Response.Buffer = true;
@@ -82,7 +78,7 @@ namespace UTTT.Ejemplo.Persona
                         lista.Insert(0, catTemp);
                         this.ddlStatus.DataSource = lista;
                         this.ddlStatus.DataBind();
-                        
+
 
                         CatPerfil catTemp1 = new CatPerfil();
                         catTemp1.id = -1;
@@ -90,7 +86,7 @@ namespace UTTT.Ejemplo.Persona
                         listaa.Insert(0, catTemp1);
                         this.ddlPerfil.DataSource = listaa;
                         this.ddlPerfil.DataBind();
-                        
+
 
                         Empleado catTemp2 = new Empleado();
                         catTemp2.id = -1;
@@ -106,9 +102,6 @@ namespace UTTT.Ejemplo.Persona
                     else
                     {
                         this.lblAccion.Text = "Editar";
-
-                        txtPassword.TextMode = TextBoxMode.SingleLine;
-                        txtreContra.TextMode = TextBoxMode.SingleLine;
                         this.txtNombre.Text = this.baseEntity.strNombreUsuario;
                         this.txtPassword.Text = (this.baseEntity.strPassword);
                         this.txtreContra.Text = (this.baseEntity.strPassword);
@@ -133,7 +126,7 @@ namespace UTTT.Ejemplo.Persona
                     this.ddlPerfil.AutoPostBack = true;
 
                     this.ddlEmpleado.SelectedIndexChanged += new EventHandler(ddlEmpleado_SelectedIndexChanged);
-                    this.ddlEmpleado.AutoPostBack = false;
+                    this.ddlEmpleado.AutoPostBack = true;
                 }
 
             }
@@ -147,6 +140,7 @@ namespace UTTT.Ejemplo.Persona
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
+            
             try
             {
                 Page.Validate();
@@ -159,14 +153,6 @@ namespace UTTT.Ejemplo.Persona
                 UTTT.Ejemplo.Linq.Data.Entity.Usuario persona = new Linq.Data.Entity.Usuario();
                 if (this.idPersona == 0)
                 {
-                    
-                    persona.strNombreUsuario = this.txtNombre.Text.Trim();
-                    persona.strPassword = this.txtPassword.Text.Trim();
-                    
-                    persona.idStatus = int.Parse(this.ddlStatus.Text);
-                    persona.idPerfil = int.Parse(this.ddlPerfil.Text);
-                    persona.idEmpleado = int.Parse(this.ddlEmpleado.Text);
-
                     var comprobar = dcGlobal.GetTable<Usuario>().Where(a => a.strNombreUsuario == txtNombre.Text).FirstOrDefault();
                     var comprobare = dcGlobal.GetTable<Usuario>().Where(a => a.idEmpleado == int.Parse(ddlEmpleado.Text)).FirstOrDefault();
                     if (comprobar != null)
@@ -185,12 +171,18 @@ namespace UTTT.Ejemplo.Persona
                         this.lblmensaje.Text = "El empleado seleccionado ya cuenta con un usuario ";
 
                     }
-
-
                     else
                     {
-                        persona.idEmpleado = int.Parse(this.ddlEmpleado.Text);
+
                         persona.strNombreUsuario = this.txtNombre.Text.Trim();
+                        persona.strPassword = this.txtPassword.Text.Trim();
+
+                        persona.idStatus = int.Parse(this.ddlStatus.Text);
+                        persona.idPerfil = int.Parse(this.ddlPerfil.Text);
+                        persona.idEmpleado = int.Parse(this.ddlEmpleado.Text);
+
+
+
                         String mensaje = String.Empty;
 
                         if (!this.validacion(persona, ref mensaje))
@@ -219,8 +211,8 @@ namespace UTTT.Ejemplo.Persona
 
                         this.Response.Redirect("~/UsuarioPrincipal.aspx", false);
 
-                    }
 
+                    }
                 }
                 if (this.idPersona > 0)
                 {
@@ -378,33 +370,17 @@ namespace UTTT.Ejemplo.Persona
                 _mensaje = "Selecciona el status";
                 return false;
             }
-            if (_persona.idPerfil == -1)
-            {
-                _mensaje = "Selecciona el perfil";
-                return false;
-            }
-            if (_persona.idEmpleado == -1)
-            {
-                _mensaje = "Selecciona el empleado";
-                return false;
-            }
+
             if (_persona.strNombreUsuario.Equals(String.Empty))
             {
                 _mensaje = "El nombre esta vacio";
                 return false;
             }
 
-            if (_persona.strNombreUsuario.Length >15)
-            {
-                _mensaje = "El nombre execede los caracteres";
-                return false;
-            }
-
-            return false;
+            return true;
         }
-        
 
-    public bool validacionHTML(ref String _mensaje)
+        public bool validacionHTML(ref String _mensaje)
         {
             CtrlValidaInyeccion valida = new CtrlValidaInyeccion();
             string mensajefuncion = string.Empty;

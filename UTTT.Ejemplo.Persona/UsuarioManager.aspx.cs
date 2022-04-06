@@ -175,12 +175,12 @@ namespace UTTT.Ejemplo.Persona
                     {
 
                         persona.strNombreUsuario = this.txtNombre.Text.Trim();
-                        persona.strPassword = this.txtPassword.Text.Trim();
+                       
+                        persona.strPassword =Seguridad.Encriptar( this.txtPassword.Text.Trim());
 
                         persona.idStatus = int.Parse(this.ddlStatus.Text);
                         persona.idPerfil = int.Parse(this.ddlPerfil.Text);
                         persona.idEmpleado = int.Parse(this.ddlEmpleado.Text);
-
 
 
                         String mensaje = String.Empty;
@@ -218,8 +218,8 @@ namespace UTTT.Ejemplo.Persona
                 {
                     persona = dcGuardar.GetTable<UTTT.Ejemplo.Linq.Data.Entity.Usuario>().First(c => c.id == idPersona);
                     persona.strNombreUsuario = this.txtNombre.Text.Trim();
-                    persona.strPassword = this.txtPassword.Text.Trim();
-
+                    //persona.strPassword = this.txtPassword.Text.Trim();
+                    persona.strPassword = Seguridad.Encriptar(this.txtPassword.Text.Trim());
                     persona.idStatus = int.Parse(this.ddlStatus.Text);
                     persona.idPerfil = int.Parse(this.ddlPerfil.Text);
                     persona.idEmpleado = int.Parse(this.ddlEmpleado.Text);

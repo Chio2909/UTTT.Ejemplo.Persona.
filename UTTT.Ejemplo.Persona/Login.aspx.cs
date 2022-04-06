@@ -19,19 +19,20 @@ namespace UTTT.Ejemplo.Persona
         }
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            //txtPassword.Text = Seguridad.Encriptar(txtPassword.Text);
-            //txtPassword.Text = Seguridad.DesEncriptar(txtPassword.Text);
-            //txtPassword.Text = Seguridad.DesEncriptar(txtPassword.Text);
+            
+
             using (SqlConnection sqlCon = new SqlConnection("Data Source=PersonaWeb.mssql.somee.com;" +
                 "Initial Catalog=PersonaWeb;Persist Security Info=True;User ID=mar1298_SQLLogin_1;Password=rixqnfjqbi"))
 
             {
+
+                
                 string query = "SELECT COUNT(1) FROM Usuario WHERE strNombreUsuario=@strNombreUsuario AND strPassword=@strPassword AND idStatus=1";
                 SqlCommand sqlcmd = new SqlCommand(query, sqlCon);
 
                 sqlcmd.Parameters.AddWithValue("@strNombreUsuario", txtUser.Text.Trim());
-
-                sqlcmd.Parameters.AddWithValue("@strPassword", (txtPassword.Text.Trim()));
+                sqlcmd.Parameters.AddWithValue("@strPassword",Seguridad.Encriptar(txtPassword.Text.Trim()));
+                
 
                 sqlCon.Open();
                 int count = Convert.ToInt32(sqlcmd.ExecuteScalar());
